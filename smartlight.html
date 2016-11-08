@@ -1,0 +1,295 @@
+<!doctype html>
+<html>
+<head>
+<script src="vue.min.js"></script>
+<style>
+body {
+    margin: 0;
+    background: #eee;
+}
+
+h1 {
+    text-align: center;
+}
+
+#azure-smarthome {
+    width: 800px;
+    margin: 0 auto;
+    padding-bottom: 10px;
+}
+
+.card {
+    margin-top: 30px;
+    padding: 10px 50px;
+    background: #fff;
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.15);
+}
+
+.card:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.bulb {
+    width: 100px;
+    height: 200px;
+    float: left;
+}
+
+.info {
+    padding: 40px 0;
+    float: left;
+}
+
+.lamp {
+    position: relative;
+    display: inline-block;
+    margin-top: 25%;
+}
+
+.lamp div:first-child {
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    background: #DCDCDC;
+    position: relative;
+    border-bottom-left-radius: 30px; 
+    -webkit-transform: rotateZ(-45deg);  
+    -moz-transform: rotateZ(-45deg);  
+    -ms-transform: rotateZ(-45deg);  
+    -o-transform: rotateZ(-45deg);  
+    transform: rotateZ(-45deg);    
+}
+
+.lamp div:first-child:after {
+    content: '';
+    width: 94px;
+    height: 94px;
+    top: 3px;
+    left: 3px;
+    position: absolute;    
+    background: -webkit-linear-gradient(rgba(255,255,255,.6), transparent, transparent);
+    background: -moz-linear-gradient(rgba(255,255,255,.6), transparent, transparent);
+    background: -ms-linear-gradient(rgba(255,255,255,.6), transparent, transparent);
+    background: -o-linear-gradient(rgba(255,255,255,.6), transparent, transparent);
+    background: linear-gradient(rgba(255,255,255,.6), transparent, transparent);
+    border-radius: 100px;
+}
+
+.lamp div:first-child:before {
+    content: '';
+    position: absolute;
+    top: 63px;
+    right: 36px;
+    border-top: 32px solid #DCDCDC;
+    border-left: 16px solid transparent;
+    border-right: 16px solid transparent;
+    z-index: 0;
+    height: 0;
+    width: 54px;
+    transform: rotateZ(45deg);
+}
+
+.lamp div:last-child {
+    position: absolute;
+    top: 106px;
+    left: 23px;
+    background: #DCDCDC;
+    width: 54px;
+    height: 30px;
+    border-radius: 20px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    -webkit-box-shadow: inset 0 -3px 3px rgba(0,0,0,.2);
+    -moz-box-shadow: inset 0 -3px 3px rgba(0,0,0,.2);
+    -ms-box-shadow: inset 0 -3px 3px rgba(0,0,0,.2);
+    -o-box-shadow: inset 0 -3px 3px rgba(0,0,0,.2);
+    box-shadow: inset 0 -3px 3px rgba(0,0,0,.2);
+}
+
+.lamp div:last-child:before {
+    content: '';
+    position: absolute;
+    top: 25px;
+    left: 6px;
+    background: #888;
+    width: 42px;
+    height: 30px;
+    border-radius: 2px;
+    border-bottom-left-radius: 17px;    
+    border-bottom-right-radius: 17px;
+    -webkit-box-shadow: inset -1px -5px 10px rgba(0,0,0,.3);
+    -moz-box-shadow: inset -1px -5px 10px rgba(0,0,0,.3);
+    -ms-box-shadow: inset -1px -5px 10px rgba(0,0,0,.3);
+    -o-box-shadow: inset -1px -5px 10px rgba(0,0,0,.3);
+    box-shadow: inset -1px -5px 10px rgba(0,0,0,.3);
+    
+}
+
+.lamp div:last-child:after {
+    content: '';
+    position: absolute;
+    top: 51px;
+    left: 12px;
+    border-top: 8px solid #444;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    height: 0;
+    width: 10px;
+    -webkit-box-shadow: inset -1px -5px 2px rgba(0,0,0,.8);
+    -moz-box-shadow: inset -1px -5px 2px rgba(0,0,0,.8);
+    -ms-box-shadow: inset -1px -5px 2px rgba(0,0,0,.8);
+    -o-box-shadow: inset -1px -5px 2px rgba(0,0,0,.8);
+    box-shadow: inset -1px -5px 2px rgba(0,0,0,.8);
+}
+
+body.turn {
+    background: #222;
+    color: #EFEF5F;
+}
+
+body.turn a {
+    color: #EFEF5F;
+    border-color: #EFEF5F;
+}
+
+body.turn a:hover, body.turn a.active {
+    color: #222;
+    background: #EFEF5F;
+}
+
+.lamp.flat div:first-child, .lamp.flat div:last-child {
+    background: #ccc;
+}
+
+.lamp.flat div:first-child:before {
+    border-top-color: #ccc;
+}
+
+.lamp.flat .shadow {
+    -webkit-filter: none;
+    -moz-filter: none;
+    -ms-filter: none;
+    -o-filter: none;
+    filter: none;
+    background: rgba(0,0,0,.2);
+}
+
+.turn .lamp div:first-child {
+    background: #FFFF35;
+    -webkit-box-shadow: 1px 1px 200px 10px rgba(255,255,50,0.5);
+    -moz-box-shadow: 1px 1px 200px 10px rgba(255,255,50,0.5);
+    -ms-box-shadow: 1px 1px 200px 10px rgba(255,255,50,0.5);
+    -o-box-shadow: 1px 1px 200px 10px rgba(255,255,50,0.5);
+    box-shadow: 1px 1px 200px 10px rgba(255,255,50,0.5);
+}
+
+.turn .lamp div:last-child {
+    background: #FFFF35;
+    -webkit-box-shadow: inset 0px -3px 3px rgba(0,0,0,.4); 
+    -moz-box-shadow: inset 0px -3px 3px rgba(0,0,0,.4); 
+    -ms-box-shadow: inset 0px -3px 3px rgba(0,0,0,.4); 
+    -o-box-shadow: inset 0px -3px 3px rgba(0,0,0,.4); 
+    box-shadow: inset 0px -3px 3px rgba(0,0,0,.4); 
+}
+
+.turn .lamp div:first-child:before {
+    border-top-color: #FFFF35;
+}
+
+.turn .lamp .shadow {
+    opacity: 0;
+}
+
+.lamp.flat div:first-child, .lamp.flat div:last-child, .lamp.flat div:last-child:before, .lamp.flat div:last-child:after {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    -ms-box-shadow: none;
+    -o-box-shadow: none;
+    box-shadow: none;
+}
+
+.lamp.flat div:first-child:after {
+    background: none;
+}
+
+button {
+    width: 80px;
+    padding: 5px 15px;
+    margin: 10px 0 0 130px;
+    border: none;
+    background: #0078e7;
+    color: #fff;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #008aed;
+}
+
+label {
+    width: 120px;
+    line-height: 24px;
+    text-align: right;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+input[type="text"] {
+    width: 200px;
+    height: 24px;
+    line-height: 28px;
+    padding: 0 10px;
+    border: 1px solid #ddd;
+    background: #fff;
+}
+
+.group {
+    padding: 10px 0;
+    line-height: 28px;
+}
+</style>
+</head>
+<body>
+<div id="azure-smarthome">
+    <h1>Azure Smart Light Simulator</h1>
+    <div class="card" v-for="appliance in appliances">
+        <div class="bulb" v-bind:class="{ turn: appliance.status === 'TurnOn' }">
+            <div class="lamp">
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+        <div class="info">
+            <div class="group" hidden><label>Appliance Id: </label>{{ appliance.applianceId }}</div>
+            <div class="group" hidden><label>Manufacturer Name: </label>{{ appliance.manufacturerName }}</div>
+            <div class="group" hidden><label>Model Name: </label>{{ appliance.modelName }}</div>
+            <div class="group" hidden><label>Version: </label>{{ appliance.version }}</div>
+            <div class="group"><label>Name: </label>{{ appliance.friendlyName }}</div>
+            <div class="group"><label>Description: </label>{{ appliance.friendlyDescription }}</div>
+            <div class="group" hidden><label>Reachable: </label>{{ appliance.isReachable }}</div>
+            <div class="group" hidden><label>Status: </label>{{ appliance.status }}</div>
+            <button @click="removeDevice(appliance.applianceId)">Remove</button>
+        </div>
+    </div>
+    <div class="card">
+        <div class="bulb">
+            <div class="lamp">
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+        <div class="info">
+            <div class="group" hidden><label for="manufacturerName">Manufacturer Name: </label><input id="manufacturerName" type="text" v-model="newDevice.manufacturerName"></div>
+            <div class="group" hidden><label for="modelName">Model Name: </label><input id="modelName" type="text" v-model="newDevice.modelName"></div>
+            <div class="group" hidden><label for="version">Version: </label><input id="version" type="text" v-model="newDevice.version"></div>
+            <div class="group"><label for="friendlyName">Name: </label><input id="friendlyName" type="text" v-model="newDevice.friendlyName"> Required</div>
+            <div class="group"><label for="friendlyDescription">Description: </label><input id="friendlyDescription" type="text" v-model="newDevice.friendlyDescription"></div>
+            <button @click="addNewDevice()">Add</button>
+        </div>
+    </div>
+</div>
+<script src="main.js"></script>
+</body>
+</html>

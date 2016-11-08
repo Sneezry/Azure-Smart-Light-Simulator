@@ -1,0 +1,24 @@
+{
+    "manifest_version": 2,
+    "name": "Azure Smart Light Simulator",
+    "version": "1.0",
+    "description": "Azure Smart Light Simulator",
+    "icons": {
+        "16": "IoT.png",
+        "48": "IoT.png",
+        "128": "IoT.png"
+    },
+    "background": {
+        "scripts": ["background.js"]
+    },
+    "browser_action": {
+        "default_icon": {
+            "19": "IoT.png",
+            "38": "IoT.png"
+        },
+        "default_title": "Azure Smart Light Simulator"
+    },
+    "permissions": [
+        "https://myAwsomeIoTHub.azure-devices.net/devices/Alexa/messages/devicebound?api-version=2016-02-03"
+    ]
+}
